@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +25,9 @@ namespace ASP.NET_CORE_PROJECT
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllersWithViews();
+      services.AddMvcCore();
+      services.AddEntityFrameworkNpgsql().AddDbContext<Context>(opt => // db context kabýl etmiyor
+        opt.UseNpgsql(Configuration.GetConnectionString("DataAccessPostgreSqlProvider")));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
