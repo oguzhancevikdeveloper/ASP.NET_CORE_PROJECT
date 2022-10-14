@@ -26,8 +26,8 @@ namespace ASP.NET_CORE_PROJECT
     {
       services.AddControllersWithViews();
       services.AddMvcCore();
-      services.AddEntityFrameworkNpgsql().AddDbContext<Context>(opt => // db context kabýl etmiyor
-        opt.UseNpgsql(Configuration.GetConnectionString("DataAccessPostgreSqlProvider")));
+      //services.AddEntityFrameworkNpgsql().AddDbContext<Context>(opt => // db context kabýl etmiyor
+      //  opt.UseNpgsql(Configuration.GetConnectionString("DataAccessPostgreSqlProvider")));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASP.NET_CORE_PROJECT
+namespace DataAccessLayer
 {
   public class Context : DbContext
   {
-    public Context(DbContextOptions<Context> options) : base(options)
-    {
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      optionsBuilder.UseNpgsql("Server=localhost;User Id=postgres;Port=5432;Password=123456;Database=CoreBlogDb;Pooling=true; Integrated Security =true;");
     }
 
     public DbSet<About> Abouts { get; set; }

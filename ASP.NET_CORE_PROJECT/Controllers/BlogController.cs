@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
-  public class CategoryController : Controller
+  public class BlogController : Controller
   {
-    CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+    BlogManager bm = new BlogManager(new EfBlogRepository());
     public IActionResult Index()
     {
-      var values = cm.GetList();
+      var values = bm.GetList();
       return View(values);
     }
   }
