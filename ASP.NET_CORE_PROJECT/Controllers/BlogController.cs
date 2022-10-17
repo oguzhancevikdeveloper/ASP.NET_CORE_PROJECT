@@ -18,6 +18,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     }
     public IActionResult BlogReadAll(int id)
     {
+      ViewBag.Id = id;
       var values = bm.GetBlogById(id);
       return View(values);
     }
