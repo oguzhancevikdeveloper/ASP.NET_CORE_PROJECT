@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
 
-  //[Authorize]
   public class WriterController : Controller
   {
-    [Authorize]
     public IActionResult Index()
     {
       return View();

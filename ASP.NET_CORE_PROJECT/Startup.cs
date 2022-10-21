@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +28,25 @@ namespace ASP.NET_CORE_PROJECT
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllersWithViews();
-      services.AddMvcCore();
+      services.AddSession();
+
+      //services.AddMvcCore();
+      services.AddMvc(config =>
+      {
+        var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+        config.Filters.Add(new AuthorizeFilter(policy));
+      });
+
+      services.AddMvc();
+      services.AddAuthentication(
+        CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(x =>
+        {
+          x.LoginPath = "/Login/Index";
+        }
+        );
 
     }
 
@@ -43,10 +64,11 @@ namespace ASP.NET_CORE_PROJECT
         app.UseHsts();
       }
 
-      app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1/","?code={0}");
+      app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1/", "?code={0}");
       app.UseHttpsRedirection();
       app.UseStaticFiles();
-
+      app.UseSession();
+      app.UseAuthentication();
       app.UseRouting();
 
       app.UseAuthorization();
