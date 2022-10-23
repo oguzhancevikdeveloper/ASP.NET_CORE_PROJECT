@@ -41,12 +41,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
           ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
         }
       }
-
       return View();
-
-
-
     }
   }
-
 }
