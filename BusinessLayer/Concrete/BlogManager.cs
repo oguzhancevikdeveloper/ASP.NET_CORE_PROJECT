@@ -32,6 +32,11 @@ namespace BusinessLayer.Concrete
       return _blogDal.GetListAll();
     }
 
+    public List<Blog> GetListWithCategoryByWriterBm(int id)
+    {
+      return _blogDal.GetListWithCategoryByWriter(id);
+    }
+
     public List<Blog> GetLast3Blog()
     {
       return _blogDal.GetListAll().TakeLast(3).ToList();
@@ -57,7 +62,7 @@ namespace BusinessLayer.Concrete
       _blogDal.Delete(t);
     }
 
-    public Blog GetById(int id)
+    public Blog TGetById(int id)
     {
      return _blogDal.GetById(id);
     }

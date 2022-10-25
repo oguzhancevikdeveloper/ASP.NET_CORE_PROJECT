@@ -17,6 +17,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
   public class BlogController : Controller
   {
     BlogManager bm = new BlogManager(new EfBlogRepository());
+    CategoryManager cm = new CategoryManager(new EfCategoryRepository());
     public IActionResult Index()
     {
       var values = bm.GetBlogListWithCategory(); // Burada iki table include edip view e gönderdik :)
@@ -31,13 +32,14 @@ namespace ASP.NET_CORE_PROJECT.Controllers
 
     public IActionResult BlogListByWriter()
     {
-      var values = bm.GetBlogListByWriter(1);
+      var values = bm.GetListWithCategoryByWriterBm(1);
       return View(values);
     }
+
     [HttpGet]
     public IActionResult BlogAdd()
     {
-      CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+      
       List<SelectListItem> categoryValues = (from x in cm.GetList()
                                             select new SelectListItem
                                             {
@@ -70,6 +72,36 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       }
 
       return View();
+    }
+    public IActionResult DeleteBlog(int id)
+    {
+      var blogValue = bm.TGetById(id);
+      bm.TDelete(blogValue);
+      return RedirectToAction("BlogListByWriter");
+    }
+
+    [HttpGet]
+    public IActionResult EditBlog(int id)
+    {
+      List<SelectListItem> categoryValues = (from x in cm.GetList()
+                                             select new SelectListItem
+                                             {
+                                               Text = x.CategoryName,
+                                               Value = x.CategoryId.ToString()
+                                             }).ToList();
+      var blogValue = bm.TGetById(id);
+      ViewBag.cv = categoryValues;
+      return View(blogValue);
+    }
+
+    [HttpPost]
+    public IActionResult EditBlog(Blog blog)
+    {
+      blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+      blog.BlogStatus = true;
+      blog.WriterId = 1;
+      bm.TUpdate(blog);
+      return View("BlogListByWriter");
     }
   }
 }
