@@ -12,7 +12,8 @@ namespace DataAccessLayer
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseNpgsql("Server=localhost;User Id=postgres;Port=5432;Password=123456;Database=CoreBlogDb;Pooling=true; Integrated Security =true;");
+      //optionsBuilder.UseNpgsql("Server=localhost;User Id=postgres;Port=5432;Password=123456;Database=CoreBlogDb;Pooling=true; Integrated Security =true;");
+      optionsBuilder.UseSqlServer("Server=DESKTOP-O3DVRF8\\SQLEXPRESS;User Id=DESKTOP-O3DVRF8\\oguzh;Password=;Database=CoreBlogDb;Pooling=true; Integrated Security =true;");
     }
 
     public DbSet<About> Abouts { get; set; }
@@ -22,5 +23,6 @@ namespace DataAccessLayer
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Writer> Writers { get; set; }
     public DbSet<NewsLetter> NewsLetters { get; set; }
+    public DbSet<BlogRayting> BlogRaytings { get; set; }
   }
 }

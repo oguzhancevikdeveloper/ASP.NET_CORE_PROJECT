@@ -3,48 +3,48 @@ using System;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221019083714_mig_writer_blog_relation")]
-    partial class mig_writer_blog_relation
+    [Migration("20221030111123_first_mig")]
+    partial class first_mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .UseIdentityColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("EntityLayer.Concrete.About", b =>
                 {
                     b.Property<int>("AboutId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("AboutDetail1")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AboutDetail2")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AboutDetailIMage1")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AboutDetailIMage2")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AboutMapLocation")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("AboutStatus")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.HasKey("AboutId");
 
@@ -55,32 +55,32 @@ namespace DataAccessLayer.Migrations
                 {
                     b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("BlogContent")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BlogCreateDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("BlogImage")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("BlogStatus")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("BlogThumbnailImage")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlogTitle")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("WriterId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("BlogId");
 
@@ -91,21 +91,42 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.BlogRayting", b =>
+                {
+                    b.Property<int>("BlogRaytingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogRaytingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogTotalScore")
+                        .HasColumnType("int");
+
+                    b.HasKey("BlogRaytingId");
+
+                    b.ToTable("BlogRaytings");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("CategoryDescription")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("CategoryStatus")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.HasKey("CategoryId");
 
@@ -116,26 +137,29 @@ namespace DataAccessLayer.Migrations
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("BlogId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogScore")
+                        .HasColumnType("int");
 
                     b.Property<string>("CommentContent")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CommentDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CommentName")
-                        .HasColumnType("text");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("CommentStatus")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("CommentTitle")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommentUserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommentId");
 
@@ -148,59 +172,77 @@ namespace DataAccessLayer.Migrations
                 {
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("ContactDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ContactMail")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactMessage")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ContactStatus")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("ContactSubject")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactUserName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactId");
 
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.NewsLetter", b =>
+                {
+                    b.Property<int>("MailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Mail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MailStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MailId");
+
+                    b.ToTable("NewsLetters");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Writer", b =>
                 {
                     b.Property<int>("WriterId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("RepeatPassword")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("WriterAbout")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WriterImage")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WriterMail")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WriterName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WriterPassword")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("WriterId");
 

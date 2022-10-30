@@ -31,7 +31,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       {
         writer.Status = true;
         writer.WriterAbout = "Deneme Test";
-        wm.WriterAdd(writer);
+        wm.TAdd(writer);
         return RedirectToAction("Index", "Blog");
       }
       else

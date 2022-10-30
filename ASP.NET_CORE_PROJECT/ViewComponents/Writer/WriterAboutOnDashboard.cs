@@ -1,21 +1,21 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASP.NET_CORE_PROJECT.ViewComponents.Blog
+namespace ASP.NET_CORE_PROJECT.ViewComponents.Writer
 {
-  public class WriterLastBlog : ViewComponent
+  
+  public class WriterAboutOnDashboard: ViewComponent
   {
-    BlogManager bm = new BlogManager(new EfBlogRepository());
+    WriterManager wm = new WriterManager(new EfWriterRepository());
 
     public IViewComponentResult Invoke()
     {
-      var values = bm.GetBlogListByWriter(1);
+      var values = wm.GetWriterById(1);
       return View(values);
     }
   }
