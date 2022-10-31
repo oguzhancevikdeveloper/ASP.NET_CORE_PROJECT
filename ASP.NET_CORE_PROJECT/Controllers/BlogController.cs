@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
@@ -29,7 +28,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       var values = bm.GetBlogById(id);
       return View(values);
     }
-
     public IActionResult BlogListByWriter()
     {
       var values = bm.GetListWithCategoryByWriterBm(1);

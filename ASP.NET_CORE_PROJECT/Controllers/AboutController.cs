@@ -1,10 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
@@ -16,10 +12,8 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       var values = abm.GetList();
       return View(values);
     }
-
     public PartialViewResult SocialMediaAbout()
-    {
-      
+    {     
       return PartialView();
     }
   }
