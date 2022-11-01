@@ -16,6 +16,10 @@
   <ItemGroup>
     <Compile Include="Migrations\20221030111123_first_mig.cs" />
     <Compile Include="Migrations\20221030111123_first_mig.Designer.cs" />
+    <Compile Include="Migrations\20221101123641_mig_notification_table.cs" />
+    <Compile Include="Migrations\20221101123641_mig_notification_table.Designer.cs" />
+    <Compile Include="Migrations\20221101133910_mig_noti_add.cs" />
+    <Compile Include="Migrations\20221101133910_mig_noti_add.Designer.cs" />
     <Compile Include="Migrations\ContextModelSnapshot.cs" />
   </ItemGroup>
 
