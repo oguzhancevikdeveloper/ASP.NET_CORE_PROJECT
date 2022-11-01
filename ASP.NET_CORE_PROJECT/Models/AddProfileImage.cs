@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace EntityLayer.Concrete
+namespace ASP.NET_CORE_PROJECT.Models
 {
-  public class Writer
+  public class AddProfileImage
   {
-    [Key]
     public int WriterId { get; set; }
     public string WriterName { get; set; }
     public string WriterAbout { get; set; }
-    public string WriterImage { get; set; }
+    public IFormFile WriterImage { get; set; }
     public string WriterMail { get; set; }
     public string WriterPassword { get; set; }
     public string RepeatPassword { get; set; }
     public bool Status { get; set; }
-    //public string Sehir { get; set; }
-    public List<Blog> Blogs { get; set; }
+
   }
 }

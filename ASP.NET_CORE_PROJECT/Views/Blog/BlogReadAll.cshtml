@@ -67,7 +67,7 @@
           }
           @if (Model.Any(x => x.Comments == null))
           {
-            <h5>İlk Yorumu Siz Yapın!!</h5>
+            
           }
         
           @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.Id })

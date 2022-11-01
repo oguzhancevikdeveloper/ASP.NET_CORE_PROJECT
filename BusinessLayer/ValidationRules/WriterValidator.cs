@@ -16,7 +16,7 @@ namespace BusinessLayer.ValidationRules
       RuleFor(x => x.WriterPassword).Equal(x => x.RepeatPassword).When(x => !String.IsNullOrWhiteSpace(x.WriterPassword)).
         WithMessage("Girdiğiniz Şifreler Aynı Değil");
       RuleFor(x => x.WriterPassword).NotEmpty().MinimumLength(8).
-        Matches("[A-Z]").WithMessage("En Az Bir Tane Büyük Harf İçermeli.").
+        Matches("[A-Z]").WithMessage("En Az Bir Tane Büyük Harf İçermeli").
         Matches("[a-z]").WithMessage("En Az Bir Tane Küçük Harf İçermeli").
         Matches("[0-9]").WithMessage("En Az Bir Rakam İçermeli");
     }

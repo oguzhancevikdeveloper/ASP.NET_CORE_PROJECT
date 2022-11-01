@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Shared\Components\CommentList\CommentListByBlog\" />
+    <Folder Include="wwwroot\WriterImageFiles\" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
@@ -12,12 +13,14 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     WriterManager wm = new WriterManager(new EfWriterRepository());
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Index()
     {
       return View();
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public IActionResult Index(Writer writer)
     {
       WriterValidator wv = new WriterValidator();

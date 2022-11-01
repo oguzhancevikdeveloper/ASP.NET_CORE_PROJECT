@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
   ViewData["Title"] = "Index";
   Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <body>
@@ -50,16 +48,11 @@
           <h6 class="card-text">Core 5.0 Proje Kampı</h6>
         </div>
       </div>
-    </div>
-
-   
+    </div> 
   </div>
   @await Component.InvokeAsync("BlogListDashboard")
-
   @await Component.InvokeAsync("WriterAboutOnDashboard")
-
   @await Component.InvokeAsync("CategoryListDashboard")
-
 </body>
 </html>
 

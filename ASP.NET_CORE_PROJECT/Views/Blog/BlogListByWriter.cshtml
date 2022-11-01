@@ -28,7 +28,16 @@
       <td>@item.BlogTitle</td>
       <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
       <td>@item.Category.CategoryName</td>
-      <td>@item.BlogStatus</td>
+
+      @if (item.BlogStatus == true)
+      {
+        <td>Aktif</td>
+      }
+      @if (item.BlogStatus == false)
+      {
+        <td>Pasif</td>
+      }
+
       <td><a href="/Blog/DeleteBlog/@item.BlogId" class="btn btn-danger">Sil</a></td>
       <td><a href="/Blog/EditBlog/@item.BlogId" class="btn btn-warning">Düzenle</a></td>
     </tr>
