@@ -22,6 +22,10 @@
     <Compile Include="Migrations\20221101133910_mig_noti_add.Designer.cs" />
     <Compile Include="Migrations\20221102155355_mig_message_table.cs" />
     <Compile Include="Migrations\20221102155355_mig_message_table.Designer.cs" />
+    <Compile Include="Migrations\20221103105003_mig_team_table.cs" />
+    <Compile Include="Migrations\20221103105003_mig_team_table.Designer.cs" />
+    <Compile Include="Migrations\20221103111742_mig_message_relation.cs" />
+    <Compile Include="Migrations\20221103111742_mig_message_relation.Designer.cs" />
     <Compile Include="Migrations\ContextModelSnapshot.cs" />
   </ItemGroup>
 
