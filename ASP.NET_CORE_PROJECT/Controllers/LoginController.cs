@@ -41,7 +41,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
 
 
 
-        return RedirectToAction("Index", "Writer");
+        return RedirectToAction("Index", "Dashboard");
       }
       else
       {

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,7 +16,11 @@ namespace ASP.NET_CORE_PROJECT.ViewComponents.Writer
 
     public IViewComponentResult Invoke()
     {
-      var values = wm.GetWriterById(1);
+      var useremail = User.Identity.Name;
+
+      Context c = new Context();
+      var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
+      var values = wm.GetWriterById(writerId);
       return View(values);
     }
   }

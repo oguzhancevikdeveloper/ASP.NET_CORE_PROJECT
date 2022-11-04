@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -12,7 +13,7 @@ using System.Linq;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
-  [AllowAnonymous]
+ 
   public class BlogController : Controller
   {
     BlogManager bm = new BlogManager(new EfBlogRepository());
@@ -30,7 +31,10 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     }
     public IActionResult BlogListByWriter()
     {
-      var values = bm.GetListWithCategoryByWriterBm(1);
+      var useremail = User.Identity.Name;
+      Context c = new Context();
+      var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
+      var values = bm.GetListWithCategoryByWriterBm(writerId);
       return View(values);
     }
 
@@ -53,11 +57,14 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     {
       BlogValidator blv = new BlogValidator();
       ValidationResult results = blv.Validate(blog);
-
+      var useremail = User.Identity.Name;
+      Context c = new Context();
+      var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
       if (results.IsValid)
       {
         blog.BlogStatus = true;
         blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+        blog.WriterId = writerId;
         bm.TAdd(blog);
         return RedirectToAction("BlogListByWriter", "Blog");
       }
@@ -95,9 +102,13 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     [HttpPost]
     public IActionResult EditBlog(Blog blog)
     {
+      var useremail = User.Identity.Name;
+      Context c = new Context();
+      var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
+
       blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
       blog.BlogStatus = true;
-      blog.WriterId = 1;
+      blog.WriterId = writerId;
       bm.TUpdate(blog);
       return View("BlogListByWriter");
     }
