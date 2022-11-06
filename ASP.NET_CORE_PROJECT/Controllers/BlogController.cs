@@ -18,6 +18,8 @@ namespace ASP.NET_CORE_PROJECT.Controllers
   {
     BlogManager bm = new BlogManager(new EfBlogRepository());
     CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+    Context c = new Context();
+
 
 
     public IActionResult Index()
@@ -37,7 +39,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     public IActionResult BlogListByWriter()
     {
       var useremail = User.Identity.Name;
-      Context c = new Context();
       var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
       var values = bm.GetListWithCategoryByWriterBm(writerId);
       return View(values);
@@ -45,8 +46,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
 
     [HttpGet]
     public IActionResult BlogAdd()
-    {
-      
+    {      
       List<SelectListItem> categoryValues = (from x in cm.GetList()
                                             select new SelectListItem
                                             {
@@ -63,7 +63,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       BlogValidator blv = new BlogValidator();
       ValidationResult results = blv.Validate(blog);
       var useremail = User.Identity.Name;
-      Context c = new Context();
       var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
       if (results.IsValid)
       {
@@ -108,7 +107,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     public IActionResult EditBlog(Blog blog)
     {
       var useremail = User.Identity.Name;
-      Context c = new Context();
       var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
 
       blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
