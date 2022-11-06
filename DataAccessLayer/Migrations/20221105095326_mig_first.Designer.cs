@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221103111742_mig_message_relation")]
-    partial class mig_message_relation
+    [Migration("20221105095326_mig_first")]
+    partial class mig_first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

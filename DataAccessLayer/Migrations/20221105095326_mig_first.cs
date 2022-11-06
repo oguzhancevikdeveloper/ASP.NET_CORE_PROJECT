@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class first_mig : Migration
+    public partial class mig_first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,6 +74,24 @@ namespace DataAccessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    MessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Sender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Receiver = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MessageStatus = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.MessageId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NewsLetters",
                 columns: table => new
                 {
@@ -85,6 +103,37 @@ namespace DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NewsLetters", x => x.MailId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    NotificationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NotificationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotificationTypeSymbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotificationDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotificationStatus = table.Column<bool>(type: "bit", nullable: false),
+                    NotificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NotificationColor = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeamName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.TeamId);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,6 +153,34 @@ namespace DataAccessLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Writers", x => x.WriterId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Matches",
+                columns: table => new
+                {
+                    MatchId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HomeTeamId = table.Column<int>(type: "int", nullable: true),
+                    GuestTeamId = table.Column<int>(type: "int", nullable: true),
+                    MatchDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Stadium = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Matches", x => x.MatchId);
+                    table.ForeignKey(
+                        name: "FK_Matches_Teams_GuestTeamId",
+                        column: x => x.GuestTeamId,
+                        principalTable: "Teams",
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Matches_Teams_HomeTeamId",
+                        column: x => x.HomeTeamId,
+                        principalTable: "Teams",
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,6 +213,36 @@ namespace DataAccessLayer.Migrations
                         principalTable: "Writers",
                         principalColumn: "WriterId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Message2s",
+                columns: table => new
+                {
+                    MessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderId = table.Column<int>(type: "int", nullable: true),
+                    ReceiverId = table.Column<int>(type: "int", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MessageDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MessageStatus = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message2s", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Message2s_Writers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Writers",
+                        principalColumn: "WriterId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Message2s_Writers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Writers",
+                        principalColumn: "WriterId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +284,26 @@ namespace DataAccessLayer.Migrations
                 name: "IX_Comments_BlogId",
                 table: "Comments",
                 column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_GuestTeamId",
+                table: "Matches",
+                column: "GuestTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_HomeTeamId",
+                table: "Matches",
+                column: "HomeTeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message2s_ReceiverId",
+                table: "Message2s",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message2s_SenderId",
+                table: "Message2s",
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -194,10 +321,25 @@ namespace DataAccessLayer.Migrations
                 name: "Contacts");
 
             migrationBuilder.DropTable(
+                name: "Matches");
+
+            migrationBuilder.DropTable(
+                name: "Message2s");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
                 name: "NewsLetters");
 
             migrationBuilder.DropTable(
+                name: "Notifications");
+
+            migrationBuilder.DropTable(
                 name: "Blogs");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "Categories");

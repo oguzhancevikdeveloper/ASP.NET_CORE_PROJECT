@@ -13,22 +13,27 @@ using System.Linq;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
- 
+  [AllowAnonymous]
   public class BlogController : Controller
   {
     BlogManager bm = new BlogManager(new EfBlogRepository());
     CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+
+
     public IActionResult Index()
     {
-      var values = bm.GetBlogListWithCategory(); // Burada iki table include edip view e gönderdik :)
+      var values = bm.GetBlogListWithCategory();
       return View(values);
     }
+
+
     public IActionResult BlogReadAll(int id)
     {
       ViewBag.Id = id;
       var values = bm.GetBlogById(id);
       return View(values);
     }
+
     public IActionResult BlogListByWriter()
     {
       var useremail = User.Identity.Name;
