@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
+  [AllowAnonymous]
   public class LoginController : Controller
   {
-    [AllowAnonymous] // Startupta oluşturduğumuz kısıtlamayı authorize yi sadece burası için kaldır.
+    // Startupta oluşturduğumuz kısıtlamayı authorize yi sadece burası için kaldır.
     public IActionResult Index()
     {
       return View();
     }
 
     [HttpPost]
-    [AllowAnonymous]
     public async Task<IActionResult>  Index(Writer writer)
     {
       Context C = new Context();
@@ -37,9 +37,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
         var userIdentity = new ClaimsIdentity(claims,"a"); // Burda neden illaki string bir değer göndermemiz gerekiyor?
         ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
         await HttpContext.SignInAsync(principal);
-
-
-
 
         return RedirectToAction("Index", "Dashboard");
       }

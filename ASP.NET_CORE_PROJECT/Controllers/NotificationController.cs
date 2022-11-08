@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
+  [AllowAnonymous]
   public class NotificationController : Controller
   {
     NotificationManager nm = new NotificationManager(new EfNotificationRepository());
@@ -16,8 +17,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     {
       return View();
     }
-
-    [AllowAnonymous]
+    
     public IActionResult AllNotification()
     {
       var values = nm.GetList();

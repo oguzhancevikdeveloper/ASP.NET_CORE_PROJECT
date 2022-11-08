@@ -5,25 +5,12 @@
   Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 
-<!--
-  Author: W3layouts
-  Author URL: http://w3layouts.com
-  License: Creative Commons Attribution 3.0 Unported
-  License URL: http://creativecommons.org/licenses/by/3.0/
--->
-
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <body>
-
-  <!--//banner-->
   <section class="banner-bottom">
-    <!--/blog-->
     <div class="container">
       <div class="row">
-        <!--left-->
         <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
           @foreach (var item in Model)
           {
@@ -55,7 +42,6 @@
                   </ul>
                 </div>
               </div>
-
               <h3>
                 <a href="single.html">@item.BlogTitle </a>
               </h3>
@@ -64,21 +50,13 @@
               </p>
               <a href="/Blog/Index/" class="btn btn-primary read-m">Blog Listesi</a>
             </div>
-          }
-          @if (Model.Any(x => x.Comments == null))
-          {
-            
-          }
-        
-          @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.Id })
-          
+          }      
+          @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.Id })          
           @*@await Html.PartialAsync("~/Views/Comment/CommentListByBlog.cshtml")*@
           @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
 
         </div>
 
-        <!--//left-->
-        <!--right-->
         <aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
           <div class="right-blog-info text-left">
             <div class="tech-btm">
@@ -123,7 +101,6 @@
                   </a>
                 </div>
                 <div class="blog-grid-right">
-
                   <h5>
                     <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
                   </h5>
@@ -132,14 +109,10 @@
               </div>
             </div>
           </div>
-
         </aside>
-        <!--//right-->
       </div>
     </div>
   </section>
-
 </body>
-
 </html>
 

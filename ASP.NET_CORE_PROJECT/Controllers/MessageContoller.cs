@@ -14,15 +14,13 @@ namespace ASP.NET_CORE_PROJECT.Controllers
   {
     Message2Manager mm = new Message2Manager(new EfMessage2Repository());
 
-    [AllowAnonymous]
     public IActionResult Inbox()
     {
-      int id = 1;
+      int id = 2;
       var values = mm.GetInboxListByWriter(id);
       return View(values);
     }
-
-    [AllowAnonymous]
+    
     public IActionResult MessageDetails(int id)
     {
       var value = mm.TGetById(id);

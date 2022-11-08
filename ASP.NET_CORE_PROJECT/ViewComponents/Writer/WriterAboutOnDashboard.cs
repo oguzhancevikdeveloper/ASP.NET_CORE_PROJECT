@@ -20,7 +20,7 @@ namespace ASP.NET_CORE_PROJECT.ViewComponents.Writer
 
       Context c = new Context();
       var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
-      var values = wm.GetWriterById(writerId);
+      var values = wm.GetWriterById(2);
       return View(values);
     }
   }
