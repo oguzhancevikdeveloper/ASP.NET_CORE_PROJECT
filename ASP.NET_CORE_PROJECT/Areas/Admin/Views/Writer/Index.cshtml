@@ -1,0 +1,33 @@
+﻿
+@{
+  ViewData["Title"] = "Index";
+  Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Yazar Ajax İşlemleri</h1>
+
+<button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
+<br />
+<div id="writerlist">
+
+</div>
+
+<script>
+
+</script>
+@section scripts
+{
+  <script>
+    $("#btngetlist").click(function () {
+      $.ajax({
+        contentType: "application/json",
+        dataType: "json",
+        type: "Get",
+        url: "/Admin/Writer/WriterList/",
+        success: function (func) {
+          console.log(func);
+        }
+      });
+    });
+</script>
+}
