@@ -12,5 +12,12 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       var values = cm.GetList();
       return View(values);
     }
+
+    public IActionResult DeleteCategory(int id)
+    {
+      var categoryValue = cm.TGetById(id);
+      cm.TDelete(categoryValue);
+      return RedirectToAction("Index","Category");
+    }
   }
 }

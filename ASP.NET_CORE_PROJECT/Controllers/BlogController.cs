@@ -62,7 +62,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       BlogValidator blv = new BlogValidator();
       ValidationResult results = blv.Validate(blog);
       var userName = User.Identity.Name;
-      var writerId = c.Writers.Where(x => x.WriterName == userName).Select(y => y.WriterId).FirstOrDefault();
+      var writerId = c.Writers.Where(x => x.WriterMail == userName).Select(y => y.WriterId).FirstOrDefault();
       if (results.IsValid)
       {
         blog.BlogStatus = true;
@@ -105,14 +105,13 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     public IActionResult EditBlog(Blog blog)
     {
       var username = User.Identity.Name;
-      var usermail = c.Writers.Where(x => x.WriterName == username).Select(y => y.WriterMail).FirstOrDefault();
-      var writerId = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterId).FirstOrDefault();
+      var writerId = c.Writers.Where(x => x.WriterMail == username).Select(y => y.WriterId).FirstOrDefault();
 
       blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
       blog.BlogStatus = true;
       blog.WriterId = writerId;
       bm.TUpdate(blog);
-      return View("BlogListByWriter");
+      return RedirectToAction("BlogListByWriter");
     }
   }
 }
