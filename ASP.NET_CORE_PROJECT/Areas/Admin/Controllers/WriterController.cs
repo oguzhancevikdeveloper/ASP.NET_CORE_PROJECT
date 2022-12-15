@@ -16,6 +16,30 @@ namespace ASP.NET_CORE_PROJECT.Areas.Admin.Controllers
       return View();
     }
 
+    [HttpPost]
+    public IActionResult AddWriter(Writer w)
+    {
+      writers.Add(w);
+      var jsonwriters = JsonConvert.SerializeObject(w);
+      return Json(jsonwriters);
+    }
+
+    public IActionResult DeleteWriter(int id)
+    {
+      var writer = writers.FirstOrDefault(x => x.Id == id);
+      writers.Remove(writer);
+      return Json(writer);
+    }
+
+    [HttpPost]
+    public IActionResult UpdateWriter(Writer w)
+    {
+      var writer = writers.FirstOrDefault(x => x.Id == w.Id);
+      writer.Name = w.Name;
+      var jsonWriter = JsonConvert.SerializeObject(w);
+      return Json(jsonWriter);
+    }
+
     public IActionResult WriterList()
     {
       var jsonWriters = JsonConvert.SerializeObject(writers);
