@@ -1,6 +1,8 @@
 ﻿using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DataAccessLayer
 {
@@ -13,6 +15,8 @@ namespace DataAccessLayer
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      modelBuilder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
+
       modelBuilder.Entity<Match>()
         .HasOne(x => x.HomeTeam)
         .WithMany(y => y.HomeMatches)
@@ -38,6 +42,7 @@ namespace DataAccessLayer
         .OnDelete(DeleteBehavior.ClientSetNull);
 
       base.OnModelCreating(modelBuilder);
+
 
       //HomeMatches --> WriterSender
       //AwayMatches --> WriterReceiver

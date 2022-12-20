@@ -37,7 +37,6 @@ namespace ASP.NET_CORE_PROJECT.Controllers
           UserName = p.UserName,
           NameSurname = p.UserName
         };
-
         var result = await _userManager.CreateAsync(user, p.Password);
 
         if (result.Succeeded)
