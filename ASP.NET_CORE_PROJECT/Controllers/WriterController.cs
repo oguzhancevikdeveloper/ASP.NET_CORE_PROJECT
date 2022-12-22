@@ -6,16 +6,26 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ASP.NET_CORE_PROJECT.Controllers
 {
   public class WriterController : Controller
   {
     WriterManager wm = new WriterManager(new EfWriterRepository());
+    UserManager userManager = new UserManager(new EfUserRepository());
+
+    private readonly UserManager<AppUser> _userManager;
+
+    public WriterController(UserManager<AppUser> userManager)
+    {
+      _userManager = userManager;
+    }
 
     [Authorize]
     public IActionResult Index()
@@ -46,14 +56,21 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     }
 
     [HttpGet]
-    public IActionResult WriterEditProfile()
+    public async  Task<IActionResult> WriterEditProfile()
     {
-
-      var useremail = User.Identity.Name;
       Context c = new Context();
-      var writerId = c.Writers.Where(x => x.WriterMail == useremail).Select(y => y.WriterId).FirstOrDefault();
-      var values = wm.GetWriterById(writerId);
-      return View(values);
+      //var username = User.Identity.Name;
+      //var useremail = c.Users.Where(x => x.UserName == username).Select(t => t.Email).FirstOrDefault();
+
+      //var writerId = c.Users.Where(x => x.Email == useremail).Select(y => y.Id).FirstOrDefault();
+      //var values = wm.GetWriterById(writerId);
+      //return View(values);
+
+
+      var values = await _userManager.FindByNameAsync(User.Identity.Name);
+      var id = c.Users.Where(x => x.UserName == values.UserName).Select(t => t.Id).FirstOrDefault();
+      var value = userManager.TGetById(id);
+      return View(value);
     }
 
     [HttpPost]
