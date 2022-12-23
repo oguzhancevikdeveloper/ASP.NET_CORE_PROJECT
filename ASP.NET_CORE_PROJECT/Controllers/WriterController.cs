@@ -56,43 +56,35 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     }
 
     [HttpGet]
-    public async  Task<IActionResult> WriterEditProfile()
+    public async Task<IActionResult> WriterEditProfile()
     {
-      Context c = new Context();
-      //var username = User.Identity.Name;
-      //var useremail = c.Users.Where(x => x.UserName == username).Select(t => t.Email).FirstOrDefault();
-
-      //var writerId = c.Users.Where(x => x.Email == useremail).Select(y => y.Id).FirstOrDefault();
-      //var values = wm.GetWriterById(writerId);
-      //return View(values);
-
+      UserUpdateViewModel model = new UserUpdateViewModel();
 
       var values = await _userManager.FindByNameAsync(User.Identity.Name);
-      var id = c.Users.Where(x => x.UserName == values.UserName).Select(t => t.Id).FirstOrDefault();
-      var value = userManager.TGetById(id);
-      return View(value);
+
+      model.mail = values.Email;
+      model.namesurname = values.UserName;
+      model.imageurl = values.ImageUrl;
+      model.username = values.UserName;
+
+      return View(model);
     }
 
     [HttpPost]
-    public IActionResult WriterEditProfile(Writer writer)
+    public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model)
     {
-      WriterValidator wl = new WriterValidator();
-      ValidationResult results = wl.Validate(writer);
 
-      if (results.IsValid)
-      {
-        wm.TUpdate(writer);
-        return RedirectToAction("Index", "Dashboard");
-      }
-      else
-      {
-        foreach (var item in results.Errors)
-        {
-          ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-        }
-      }
+      var values = await _userManager.FindByNameAsync(User.Identity.Name);
 
-      return View();
+      values.NameSurname = model.namesurname;
+      values.UserName = model.username;
+      values.ImageUrl = model.imageurl;
+      values.Email = model.mail;
+      values.PasswordHash = _userManager.PasswordHasher.HashPassword(values,model.password);
+
+      var result = await _userManager.UpdateAsync(values);
+
+      return RedirectToAction("Index", "Dashboard");
     }
 
 
@@ -108,7 +100,7 @@ namespace ASP.NET_CORE_PROJECT.Controllers
     public IActionResult AddWriter(AddProfileImage p)
     {
       Writer writer = new Writer();
-      if(p.WriterImage != null)
+      if (p.WriterImage != null)
       {
         var extension = Path.GetExtension(p.WriterImage.FileName);
         var newimagename = Guid.NewGuid() + extension;
@@ -125,7 +117,8 @@ namespace ASP.NET_CORE_PROJECT.Controllers
       writer.WriterAbout = p.WriterAbout;
 
       wm.TAdd(writer);
-      return RedirectToAction("Index","Dashboard");
+      return RedirectToAction("Index", "Dashboard");
     }
+
   }
 }
