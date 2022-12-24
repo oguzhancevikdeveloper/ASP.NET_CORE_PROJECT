@@ -14,29 +14,32 @@
       <form class="forms-sample" method="post">
         <div class="form-group">
           <label for="exampleInputName1">Yazar Ad-Soyad</label>
-          <input type="text" asp-for="@Model.namesurname" class="form-control   />
+          <input type="text" asp-for="@Model.namesurname" class="form-control    />
         </div>
         <br />
         <div class="form-group">
           <label for="exampleInputName1">Kullanıcı Adı</label>
-          <input type="text" asp-for="@Model.username" class="form-control    />
+          <input type="text" asp-for="@Model.username" class="form-control     />
         </div>
         <br />
         <div class="form-group">
           <label for="exampleInputEmail3">Mail Adresi</label>
-          <input type="text" asp-for="@Model.mail" class="form-control    />
+          <input type="text" asp-for="@Model.mail" class="form-control     />
         </div>
         <br />
-        <div class="form-group">
-          <label for="exampleInputEmail3">Yeni Şifreniz</label>
-          <input type="text" asp-for="@Model.password" class="form-control    />
-        </div>
         <br />
         <div class="form-group">
           <label for="exampleInputEmail3">Resim Yolu</label>
-          <input type="text" asp-for="@Model.imageurl" class="form-control    />
+          <input type="text" asp-for="@Model.imageurl" class="form-control     />
         </div>
         <br />
+
+        <div class="form-group">
+          <br />
+          Şifrenizi Değiştrimek İçin Seçiniz =>
+          <input type="checkbox" id="abc" onclick="checkMe()" />
+          <input type="text" asp-for="@Model.password" class="form-control" id="msg" style="display:none; background-color:green"></input>
+        </div>
         <div class="form-group">
           <div class="form-group">
             <input type="file" name="img[]" class="file-upload-default">
@@ -48,4 +51,18 @@
   </div>
 </div>
 
+<script>
 
+  function checkMe() {
+    var x = document.getElementById("abc");
+    var text = document.getElementById("msg");
+
+    if (x.checked == true) {
+      text.style.display = "block";
+    }
+    else {
+      text.style.display = "none"
+    }
+  }
+
+</script>
